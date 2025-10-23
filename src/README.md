@@ -8,6 +8,7 @@ public class Main {
             printThreeWords();
     }
 }//1
+
 public class Main {
     public static void checkSumSign() { 
         int a = 7; 
@@ -20,6 +21,7 @@ public class Main {
         }
     }
 }//2
+
 public class Main {
     public static void printColor() {
         int value = 69;
@@ -35,6 +37,7 @@ public class Main {
         printColor();
     }
 }//3
+
 public class Main {
     public static void compareNumbers() {
         int a = 5;
@@ -49,6 +52,7 @@ public class Main {
         compareNumbers();
     }
 }//4
+
 public class Main {
     public static boolean isSumInRange(int num1, int num2) {
         int sum = num1 + num2;
@@ -59,6 +63,7 @@ public class Main {
         }
     }
 }//5
+
 public class NumberChecker {
     public static void main(String[] args) {
         checkNumber(1);
@@ -73,6 +78,7 @@ public class NumberChecker {
         }
     }
 }//6
+
 public class Main {
     public static void main(String[] args) {
         System.out.println(isNegative(-5));
@@ -83,6 +89,7 @@ public class Main {
         return number < 0;
     }
 }//7
+
 public class Main {
     public static void main(String[] args) {
     printStringMultipleTimes("Ура!", 3);
@@ -93,6 +100,7 @@ public class Main {
         }
     }
 }//8
+
 public class Main {
     public static boolean isLeapYear(int year) {
         if (year % 400 == 0) {
@@ -104,6 +112,7 @@ public class Main {
         }
     }
 }//9
+
 public class Main {
     public static void main(String[] args) {
         int[] arr = {1, 1, 0, 0, 1, 0, 1, 1, 0, 0};
@@ -125,6 +134,7 @@ public class Main {
         }
     }
 }//10
+
 public class Main {
     public class ArrayExample {
         public static void main(String[] args) {
@@ -141,6 +151,7 @@ public class Main {
         }
     }
 }//11
+
 public class Main {
     public class ArrayMultiplier {
         public static void main(String[] args) {
@@ -157,6 +168,7 @@ public class Main {
         }
     }
 }//12
+
 public class Main {
     public static void main(String[] args) {
     int size = 4;
@@ -179,6 +191,7 @@ public class Main {
         }
     }
 }//13
+
 public class Main {
     static int[] makeArray(int len, int value) {
         int[] arr = new int[len];
