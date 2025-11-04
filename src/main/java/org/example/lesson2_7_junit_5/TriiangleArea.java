@@ -1,4 +1,4 @@
-package org.example.lesson2_7;
+package org.example.lesson2_7_junit_5;
 
 public class TriiangleArea {
     public static double calculateArea(double base, double height) {

@@ -1,4 +1,4 @@
-package org.example.lesson2_7;
+package org.example.lesson2_7_junit_5;
 
 public class FactorialCalculator {
     public static long factorial(int n) {

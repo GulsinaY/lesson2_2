@@ -1,4 +1,4 @@
-package org.example.lesson2_7;
+package org.example.lesson2_7_junit_5;
 
 public class ArithmeticOperations {
     public static int add(int a, int b) {
