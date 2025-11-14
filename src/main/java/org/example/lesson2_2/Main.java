@@ -1,17 +1,19 @@
+package org.example.lesson2_2;
+
 public class Main {
     public static void printThreeWords() {
         System.out.println("Orange");
         System.out.println("Banana");
         System.out.println("Apple");
     }
-        public static void main(String[] args) {
-            printThreeWords();
+    public static void main(String[] args) {
+        printThreeWords();
     }
 }//1
 
 public class Main {
-    public static void checkSumSign() { 
-        int a = 7; 
+    public static void checkSumSign() {
+        int a = 7;
         int b = -2;
         int sum = a + b;
         if (sum >= 0) {
@@ -92,7 +94,7 @@ public class Main {
 
 public class Main {
     public static void main(String[] args) {
-    printStringMultipleTimes("Ура!", 3);
+        printStringMultipleTimes("Ура!", 3);
     }
     public static void printStringMultipleTimes(String text, int count) {
         for (int i = 0; i < count; i++) {
@@ -171,10 +173,8 @@ public class Main {
 
 public class Main {
     public static void main(String[] args) {
-    int size = 4;
-
-    int[][] array = new int[size][size];
-
+        int size = 4;
+        int[][] array = new int[size][size];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 if (i == j) {
@@ -182,7 +182,7 @@ public class Main {
                 }
             }
         }
-        
+
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 System.out.print(array[i][j] + " ");
@@ -199,7 +199,7 @@ public class Main {
             arr[i] = value;
         }
         return arr;
-    } 
+    }
     public static void main(String[] args) {
         System.out.println(java.util.Arrays.toString(makeArray(3, 7)));
     }
