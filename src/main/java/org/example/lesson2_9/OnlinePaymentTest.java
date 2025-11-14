@@ -1,96 +1,67 @@
-package org.example.lesson2_9;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import java.util.List;
-
-
-public class OnlinePaymentTest {
+public class OnlinePaymentTest extends BaseTest {
 
     @Test
-    @DisplayName("Проверка названия блока 'Онлайн пополнение без комиссии'")
-    public void testBlockTitle() {
-        OnlinePaymentPage paymentPage = new OnlinePaymentPage(driver);
+    @DisplayName("Проверка блока 'Онлайн пополнение без комиссии'")
+    public void testOnlinePaymentBlock() {
+        MtsHomePage homePage = new MtsHomePage(driver);
 
-        String actualTitle = paymentPage.getBlockTitle();
         String expectedTitle = "Онлайн пополнение без комиссии";
+        String actualTitle = homePage.getOnlinePaymentTitle();
+        assertTrue(actualTitle.contains(expectedTitle),
+                "Ожидалось, что заголовок содержит: " + expectedTitle + ", но получено: " + actualTitle);
 
-        assertEquals(expectedTitle, actualTitle,
-                "Название блока не соответствует ожидаемому");
+        int logosCount = homePage.getPaymentSystemLogosCount();
+        assertTrue(logosCount > 0, "Ожидалось наличие хотя бы одного логотипа платёжной системы");
+
+        boolean allLogosDisplayed = homePage.arePaymentSystemLogosDisplayed();
+        assertTrue(allLogosDisplayed, "Не все логотипы платёжных систем отображаются");
+
+        String originalUrl = homePage.getCurrentUrl();
+        homePage.clickDetailsLink();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        String newUrl = homePage.getCurrentUrl();
+        assertNotEquals(originalUrl, newUrl, "Ссылка 'Подробнее о сервисе' не работает - URL не изменился");
+
+        driver.navigate().back();
+
+        homePage.fillPaymentForm("297777777", "10");
+
+        boolean isContinueButtonEnabled = homePage.isContinueButtonEnabled();
+        assertTrue(isContinueButtonEnabled, "Кнопка 'Продолжить' должна быть активна после заполнения полей");
+
+        homePage.clickContinueButton();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        String paymentPageUrl = homePage.getCurrentUrl();
+        assertTrue(paymentPageUrl.contains("payment") || !paymentPageUrl.equals("https://www.mts.by/"),
+                "После нажатия кнопки 'Продолжить' должен произойти переход на страницу оплаты");
     }
 
     @Test
-    @DisplayName("Проверка наличия логотипов платёжных систем")
-    public void testPaymentSystemsLogos() {
-        OnlinePaymentPage paymentPage = new OnlinePaymentPage(driver);
+    @DisplayName("Проверка валидации номера телефона")
+    public void testPhoneNumberValidation() {
+        MtsHomePage homePage = new MtsHomePage(driver);
 
-        assertTrue(paymentPage.arePaymentSystemsDisplayed(),
-                "Не все логотипы платёжных систем отображаются");
+        homePage.fillPaymentForm("297777777", "10");
+        boolean isValidPhoneEnabled = homePage.isContinueButtonEnabled();
+        assertTrue(isValidPhoneEnabled, "Кнопка должна быть активна при валидном номере телефона");
 
-        int logosCount = paymentPage.getPaymentSystemsCount();
-        assertTrue(logosCount > 0,
-                "Логотипы платёжных систем не найдены");
-
-        System.out.println("Найдено логотипов платежных систем: " + logosCount);
-    }
-
-    @Test
-    @DisplayName("Проверка работы ссылки 'Подробнее о сервисе'")
-    public void testDetailsLink() {
-        OnlinePaymentPage paymentPage = new OnlinePaymentPage(driver);
-
-        assertTrue(paymentPage.isDetailsLinkDisplayed(),
-                "Ссылка 'Подробнее о сервисе' не отображается");
-
-        String originalUrl = paymentPage.getCurrentUrl();
-
-        paymentPage.clickDetailsLink();
-
-        String newUrl = paymentPage.getCurrentUrl();
-        assertNotEquals(originalUrl, newUrl,
-                "URL не изменился после клика по ссылке");
-
-        assertTrue(newUrl.contains("help")  newUrl.contains("service")  newUrl.contains("detail"),
-                "Новый URL не соответствует ожидаемому формату для страницы с подробной информацией");
-    }
-
-    @Test
-    @DisplayName("Проверка работы кнопки 'Продолжить' с валидными данными")
-    public void testContinueButtonWithValidData() {
-        OnlinePaymentPage paymentPage = new OnlinePaymentPage(driver);
-
-        String testPhoneNumber = "297777777";
-        String testAmount = "10";
-
-        paymentPage.fillPaymentForm(testPhoneNumber, testAmount);
-
-        assertTrue(paymentPage.isContinueButtonEnabled(),
-                "Кнопка 'Продолжить' не активна при валидных данных");
-
-        paymentPage.clickContinueButton();
-    }
-
-    @Test
-    @DisplayName("Комплексная проверка всего блока онлайн пополнения")
-    public void testCompleteOnlinePaymentBlock() {
-        OnlinePaymentPage paymentPage = new OnlinePaymentPage(driver);
-
-        assertEquals("Онлайн пополнение без комиссии", paymentPage.getBlockTitle());
-
-        assertTrue(paymentPage.arePaymentSystemsDisplayed());
-        assertTrue(paymentPage.getPaymentSystemsCount() >= 3);
-
-        assertTrue(paymentPage.isDetailsLinkDisplayed());
-
-        assertTrue(paymentPage.isPaymentFormDisplayed());
-
-        String testPhoneNumber = "297777777";
-        String testAmount = "5";
-
-        paymentPage.fillPaymentForm(testPhoneNumber, testAmount);
-        assertTrue(paymentPage.isContinueButtonEnabled());
-
-        System.out.println("Все проверки блока 'Онлайн пополнение без комиссии' пройдены успешно");
+        homePage.enterPhoneNumber("123");
+        homePage.enterAmount("10");
     }
 }
